@@ -41,17 +41,17 @@ pipeline {
     // Stage 5: Docker Image Push
     stage('Docker Image Push') {
       steps {
-        withCredentials([usernamePassword(
-          credentialsId: 'dockerhub-creds',  // Reference Jenkins credentials for Docker Hub
-          usernameVariable: 'DOCKER_USER',   // Set the Docker username environment variable
-          passwordVariable: 'DOCKER_PASS'    // Set the Docker password environment variable
-        )]) {
-          sh '''
-            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin  // Login to Docker Hub
-            docker push ${IMAGE_NAME}:${IMAGE_TAG}  // Push the Docker image to the registry
-          '''
-        }
-      }
+    withCredentials([usernamePassword(
+        credentialsId: 'dockerhub-creds',  // Credentials ID in Jenkins for Docker Hub
+        usernameVariable: 'DOCKER_USER',   // Username environment variable
+        passwordVariable: 'DOCKER_PASS'    // Password environment variable
+    )]) {
+      sh '''
+        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+        docker push ${IMAGE_NAME}:${IMAGE_TAG}
+      '''
     }
+  }
+}
   }
 }
