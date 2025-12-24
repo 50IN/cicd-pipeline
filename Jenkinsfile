@@ -21,16 +21,14 @@ pipeline {
       }
     }
 
-stage('Docker Image Build') {
-    steps {
-        script {
-            // Ensure Node.js and npm are installed in your Docker container
-            sh '''
-                docker build -t ${IMAGE_NAME}:${IMAGE_TAG} --build-arg NODE_VERSION=16 .
-            '''
+stages {
+        stage('Docker Image Build') {
+            steps {
+                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."  // Build the Docker image
+            }
         }
     }
-}
+
     
 
     stage('Docker Image Push') {
