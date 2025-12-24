@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:16-alpine
 WORKDIR /opt
 ADD . /opt
 RUN npm install
