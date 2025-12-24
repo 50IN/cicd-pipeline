@@ -34,7 +34,7 @@ pipeline {
     // Stage 4: Docker Image Build
     stage('Docker Image Build') {
       steps {
-        sh "docker build --platform linux/amd64 -t ${IMAGE_NAME}:${IMAGE_TAG} ."  // Build the Docker image
+        sh "docker build --platform linux/arm64/v8 -t ${IMAGE_NAME}:${IMAGE_TAG} ."  // Build the Docker image
       }
     }
 
