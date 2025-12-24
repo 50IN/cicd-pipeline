@@ -6,7 +6,7 @@ pipeline {
         checkout scm
       }
     }
-
+    
     stage('Application Build') {
       steps {
         sh 'chmod +x scripts/build.sh'
@@ -21,11 +21,17 @@ pipeline {
       }
     }
 
-    stage('Docker Image Build') {
-      steps {
-        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."  // Build the Docker image with the tag
-      }
+stage('Docker Image Build') {
+    steps {
+        script {
+            // Ensure Node.js and npm are installed in your Docker container
+            sh '''
+                docker build -t ${IMAGE_NAME}:${IMAGE_TAG} --build-arg NODE_VERSION=16 .
+            '''
+        }
     }
+}
+    
 
     stage('Docker Image Push') {
       steps {
